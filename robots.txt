@@ -1,0 +1,15 @@
+# Robots.txt for Saphal Lamsal Portfolio
+# Allow all search engines to crawl the site
+
+User-agent: *
+Allow: /
+
+# Disallow admin or private directories (if any)
+Disallow: /admin/
+Disallow: /.git/
+
+# Sitemap location
+Sitemap: https://safallamsal.com.np/sitemap.xml
+
+# Crawl-delay (optional, helps prevent server overload)
+Crawl-delay: 1

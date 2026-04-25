@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cyber Runner // Saphal Lamsal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<style>
+  #gameCanvas {
+    display: block;
+    margin: 0 auto;
+    background: linear-gradient(180deg, #06090f 0%, #0a0e17 100%);
+    border: 2px solid var(--glass-border);
+    box-shadow: 0 0 40px rgba(0, 240, 255, 0.2);
+    cursor: pointer;
+  }
+  .game-container {
+    position: relative;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .game-selector {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .game-select-btn {
+    padding: 16px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(12px);
+    cursor: pointer;
+    transition: all 0.3s var(--ease-out-smooth);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  .game-select-btn:hover {
+    border-color: var(--neon-cyan);
+    background: rgba(0, 240, 255, 0.1);
+    transform: translateY(-2px);
+  }
+  .game-select-btn.active {
+    border-color: var(--neon-cyan);
+    background: rgba(0, 240, 255, 0.15);
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+  }
+  .game-icon {
+    font-size: 32px;
+  }
+  .game-name {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--ink-80);
+    text-transform: uppercase;
+  }
+  .game-select-btn.active .game-name {
+    color: var(--neon-cyan);
+  }
+  .game-info {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 24px;
+  }
+  .game-stat {
+    padding: 16px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    text-align: center;
+    backdrop-filter: blur(12px);
+  }
+  .game-stat .label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--ink-60);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .game-stat .value {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--neon-cyan);
+    text-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+  }
+  .game-controls {
+    margin-top: 24px;
+    padding: 20px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(12px);
+  }
+  .game-controls h3 {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    color: var(--neon-cyan);
+    margin-bottom: 12px;
+  }
+  .game-controls p {
+    font-size: 14px;
+    color: var(--ink-80);
+    line-height: 1.6;
+    margin-bottom: 8px;
+  }
+</style>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1549893812626371" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<canvas id="three-canvas"></canvas>
+<div class="grid-overlay"></div>
+<div class="scanlines"></div>
+<div class="noise"></div>
+<div class="cursor-glow"></div>
+
+<nav class="nav">
+  <a href="index.html" class="nav-brand"><span class="dot"></span><span>SAPHAL.<b>LAMSAL</b></span></a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="nav-link">Home</a></li>
+    <li><a href="about.html" class="nav-link">About</a></li>
+    <li><a href="skills.html" class="nav-link">Skills</a></li>
+    <li><a href="projects.html" class="nav-link">Projects</a></li>
+    <li><a href="experience.html" class="nav-link">Experience</a></li>
+    <li><a href="certifications.html" class="nav-link">Certs</a></li>
+    <li><a href="cyberlab.html" class="nav-link">Cyber Lab</a></li>
+    <li><a href="techstack.html" class="nav-link">Stack</a></li>
+    <li><a href="game.html" class="nav-link">Game</a></li>
+    <li><a href="contact.html" class="nav-link">Contact</a></li>
+  </ul>
+  <div class="nav-status"><span class="status-dot"></span><span data-clock>—</span></div>
+  <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+
+<main>
+  <div class="container page-head">
+    <div class="eyebrow reveal">Cyber Runner</div>
+    <h1 class="reveal">Hack The Grid</h1>
+    <p class="lead reveal">A cyberpunk endless runner. Jump over firewalls, dodge security nodes. How long can you survive?</p>
+  </div>
+
+  <section class="section" style="padding-top:20px">
+    <div class="container">
+      
+      <!-- Game Selection -->
+      <div class="game-selector reveal" style="margin-bottom:32px">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px">
+          <button class="game-select-btn active" data-game="cyber-runner">
+            <span class="game-icon">🏃</span>
+            <span class="game-name">Cyber Runner</span>
+          </button>
+          <button class="game-select-btn" data-game="neon-snake">
+            <span class="game-icon">🐍</span>
+            <span class="game-name">Neon Snake</span>
+          </button>
+          <button class="game-select-btn" data-game="hack-invaders">
+            <span class="game-icon">👾</span>
+            <span class="game-name">Hack Invaders</span>
+          </button>
+          <button class="game-select-btn" data-game="memory-grid">
+            <span class="game-icon">🧠</span>
+            <span class="game-name">Memory Grid</span>
+          </button>
+          <button class="game-select-btn" data-game="code-breaker">
+            <span class="game-icon">🔐</span>
+            <span class="game-name">Code Breaker</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="game-container reveal">
+        <canvas id="gameCanvas" width="800" height="400"></canvas>
+        
+        <div class="game-info">
+          <div class="game-stat">
+            <div class="label">Score</div>
+            <div class="value" id="scoreDisplay">0</div>
+          </div>
+          <div class="game-stat">
+            <div class="label">High Score</div>
+            <div class="value" id="highScoreDisplay">0</div>
+          </div>
+          <div class="game-stat">
+            <div class="label">Status</div>
+            <div class="value" id="statusDisplay" style="font-size:16px;color:var(--term-green)">READY</div>
+          </div>
+        </div>
+
+        <div class="game-controls">
+          <h3 id="game-controls-title">// CONTROLS</h3>
+          <div id="game-controls-content">
+            <p><span class="text-cyan">SPACE</span> or <span class="text-cyan">CLICK</span> — Jump</p>
+            <p><span class="text-cyan">R</span> — Restart after game over</p>
+            <p><span class="text-cyan">ESC</span> — Pause/Resume</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div><div class="footer-brand">Saphal<span>.</span></div><div class="footer-tag">Developer · Security Enthusiast · Nepal</div></div>
+      <ul class="footer-links">
+        <li><a href="about.html">About</a></li><li><a href="skills.html">Skills</a></li>
+        <li><a href="projects.html">Projects</a></li><li><a href="experience.html">Experience</a></li>
+        <li><a href="certifications.html">Certs</a></li><li><a href="cyberlab.html">Cyber Lab</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 SAPHAL LAMSAL · ALL RIGHTS RESERVED</div>
+      <div class="social">
+        <a href="https://www.linkedin.com/in/saphallamsal/" target="_blank" rel="noopener">LINKEDIN</a>
+        <a href="https://github.com/safalamsall" target="_blank" rel="noopener">GITHUB</a>
+        <a href="mailto:info@safallamsal.com.np">EMAIL</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="js/three-scene.js"></script>
+<script src="js/main.js"></script>
+<script src="js/cyber-runner.js"></script>
+<script src="js/neon-snake.js"></script>
+<script src="js/all-games.js"></script>
+<script src="js/game-manager.js"></script>
+<script src="js/cookie-consent.js"></script>
+</body>
+</html>

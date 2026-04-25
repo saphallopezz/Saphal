@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Message Transmitted // Saphal Lamsal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  body {
+    background: #030509;
+    color: #00f0ff;
+    font-family: 'JetBrains Mono', monospace;
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .success-container {
+    width: min(800px, 95vw);
+    padding: 40px;
+    background: rgba(10, 14, 23, 0.8);
+    border: 2px solid #00f0ff;
+    box-shadow: 0 0 60px rgba(0, 240, 255, 0.5);
+    position: relative;
+    animation: glitchIn 0.5s ease;
+  }
+  
+  @keyframes glitchIn {
+    0% { transform: translate(0); }
+    20% { transform: translate(-5px, 5px); }
+    40% { transform: translate(-5px, -5px); }
+    60% { transform: translate(5px, 5px); }
+    80% { transform: translate(5px, -5px); }
+    100% { transform: translate(0); }
+  }
+  
+  .glitch-text {
+    font-size: clamp(24px, 5vw, 48px);
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 30px;
+    position: relative;
+    animation: glitch 3s infinite;
+  }
+  
+  @keyframes glitch {
+    0%, 90%, 100% { transform: translate(0); }
+    92% { transform: translate(-2px, 2px); }
+    94% { transform: translate(2px, -2px); }
+    96% { transform: translate(-2px, -2px); }
+    98% { transform: translate(2px, 2px); }
+  }
+  
+  .terminal-output {
+    background: #06090f;
+    padding: 20px;
+    border: 1px solid #00f0ff;
+    margin-bottom: 30px;
+    max-height: 400px;
+    overflow-y: auto;
+  }
+  
+  .terminal-line {
+    margin-bottom: 8px;
+    opacity: 0;
+    animation: fadeInLine 0.3s forwards;
+  }
+  
+  @keyframes fadeInLine {
+    to { opacity: 1; }
+  }
+  
+  .terminal-line::before {
+    content: '> ';
+    color: #3bffa0;
+  }
+  
+  .success { color: #3bffa0; }
+  .warning { color: #ffb347; }
+  .error { color: #ff4d6d; }
+  .info { color: #00f0ff; }
+  
+  .data-grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 12px 20px;
+    margin: 20px 0;
+    font-size: 14px;
+  }
+  
+  .data-label {
+    color: #7a8599;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 11px;
+  }
+  
+  .data-value {
+    color: #00f0ff;
+    word-break: break-all;
+  }
+  
+  .progress-bar {
+    width: 100%;
+    height: 4px;
+    background: rgba(0, 240, 255, 0.2);
+    margin: 20px 0;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #00f0ff, #3d7aff);
+    width: 0;
+    animation: progressFill 2s ease forwards;
+    box-shadow: 0 0 10px #00f0ff;
+  }
+  
+  @keyframes progressFill {
+    to { width: 100%; }
+  }
+  
+  .btn-container {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .btn {
+    padding: 14px 28px;
+    background: transparent;
+    border: 1px solid #00f0ff;
+    color: #00f0ff;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+  }
+  
+  .btn:hover {
+    background: #00f0ff;
+    color: #030509;
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+    transform: translateY(-2px);
+  }
+  
+  .scanlines {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      0deg,
+      rgba(0, 240, 255, 0.03) 0px,
+      rgba(0, 240, 255, 0.03) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+    z-index: 1;
+  }
+  
+  .matrix-bg {
+    position: fixed;
+    inset: 0;
+    opacity: 0.05;
+    pointer-events: none;
+    z-index: 0;
+  }
+  
+  .success-icon {
+    text-align: center;
+    font-size: 80px;
+    margin-bottom: 20px;
+    animation: iconPulse 2s infinite;
+  }
+  
+  @keyframes iconPulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.1); opacity: 0.8; }
+  }
+  
+  .countdown {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 12px;
+    color: #7a8599;
+  }
+  
+  @media (max-width: 768px) {
+    .success-container {
+      padding: 20px;
+    }
+    
+    .glitch-text {
+      font-size: 24px;
+    }
+    
+    .data-grid {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+  }
+</style>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1549893812626371" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div class="scanlines"></div>
+<canvas class="matrix-bg" id="matrix"></canvas>
+
+<div class="success-container">
+  <div class="success-icon">✓</div>
+  <h1 class="glitch-text">TRANSMISSION SUCCESSFUL</h1>
+  
+  <div class="terminal-output" id="terminal">
+    <div class="terminal-line info">Initializing secure transmission protocol...</div>
+    <div class="terminal-line success">Encryption: AES-256-GCM [OK]</div>
+    <div class="terminal-line success">Handshake: TLS 1.3 [OK]</div>
+    <div class="terminal-line info">Establishing connection to server...</div>
+    <div class="terminal-line success">Connection established [saphal@lamsal.com.np]</div>
+    <div class="terminal-line info">Transmitting message payload...</div>
+  </div>
+  
+  <div class="progress-bar">
+    <div class="progress-fill"></div>
+  </div>
+  
+  <div id="message-data"></div>
+  
+  <div class="btn-container">
+    <a href="index.html" class="btn">Return Home</a>
+    <a href="contact.html" class="btn">Send Another</a>
+  </div>
+  
+  <div class="countdown" id="countdown"></div>
+</div>
+
+<script>
+// Matrix rain effect
+const canvas = document.getElementById('matrix');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+const fontSize = 14;
+const columns = canvas.width / fontSize;
+const drops = Array(Math.floor(columns)).fill(1);
+
+function drawMatrix() {
+  ctx.fillStyle = 'rgba(3, 5, 9, 0.05)';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  
+  ctx.fillStyle = '#00f0ff';
+  ctx.font = fontSize + 'px monospace';
+  
+  for (let i = 0; i < drops.length; i++) {
+    const text = chars[Math.floor(Math.random() * chars.length)];
+    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+    
+    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+      drops[i] = 0;
+    }
+    drops[i]++;
+  }
+}
+
+setInterval(drawMatrix, 50);
+
+// Terminal animation
+const terminal = document.getElementById('terminal');
+const lines = [
+  { text: 'Verifying message integrity...', class: 'info', delay: 500 },
+  { text: 'Checksum: VALID', class: 'success', delay: 700 },
+  { text: 'Scanning for threats...', class: 'info', delay: 900 },
+  { text: 'Threat scan: CLEAN', class: 'success', delay: 1100 },
+  { text: 'Routing through secure channels...', class: 'info', delay: 1300 },
+  { text: 'Message delivered to inbox', class: 'success', delay: 1500 },
+  { text: 'Notification sent to recipient', class: 'success', delay: 1700 },
+  { text: '', class: '', delay: 1900 },
+  { text: '[TRANSMISSION COMPLETE]', class: 'success', delay: 2000 }
+];
+
+lines.forEach((line, i) => {
+  setTimeout(() => {
+    const div = document.createElement('div');
+    div.className = `terminal-line ${line.class}`;
+    div.textContent = line.text;
+    div.style.animationDelay = '0s';
+    terminal.appendChild(div);
+    terminal.scrollTop = terminal.scrollHeight;
+  }, line.delay);
+});
+
+// Get form data from URL params or sessionStorage
+setTimeout(() => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const name = urlParams.get('name') || sessionStorage.getItem('contactName') || 'Anonymous';
+  const email = urlParams.get('email') || sessionStorage.getItem('contactEmail') || 'Not provided';
+  const subject = urlParams.get('subject') || sessionStorage.getItem('contactSubject') || 'General Inquiry';
+  
+  const messageData = document.getElementById('message-data');
+  messageData.innerHTML = `
+    <div class="terminal-line success" style="margin: 20px 0; font-size: 16px;">MESSAGE DETAILS:</div>
+    <div class="data-grid">
+      <div class="data-label">Sender:</div>
+      <div class="data-value">${name}</div>
+      <div class="data-label">Email:</div>
+      <div class="data-value">${email}</div>
+      <div class="data-label">Subject:</div>
+      <div class="data-value">${subject}</div>
+      <div class="data-label">Timestamp:</div>
+      <div class="data-value">${new Date().toLocaleString('en-US', { 
+        year: 'numeric', 
+        month: 'short', 
+        day: 'numeric', 
+        hour: '2-digit', 
+        minute: '2-digit',
+        second: '2-digit',
+        timeZone: 'Asia/Kathmandu'
+      })} NPT</div>
+      <div class="data-label">Status:</div>
+      <div class="data-value success">✓ DELIVERED</div>
+      <div class="data-label">Message ID:</div>
+      <div class="data-value">${Math.random().toString(36).substr(2, 9).toUpperCase()}</div>
+    </div>
+  `;
+  
+  // Clear session storage
+  sessionStorage.removeItem('contactName');
+  sessionStorage.removeItem('contactEmail');
+  sessionStorage.removeItem('contactSubject');
+}, 2200);
+
+// Countdown redirect
+let countdown = 15;
+const countdownEl = document.getElementById('countdown');
+
+function updateCountdown() {
+  countdownEl.textContent = `Auto-redirecting to home in ${countdown} seconds...`;
+  countdown--;
+  
+  if (countdown < 0) {
+    window.location.href = 'index.html';
+  }
+}
+
+setTimeout(() => {
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+}, 2500);
+
+// Resize canvas
+window.addEventListener('resize', () => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+});
+</script>
+
+<script src="js/cookie-consent.js"></script>
+</body>
+</html>

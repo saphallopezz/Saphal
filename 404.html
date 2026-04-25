@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 - Page Not Found // Saphal Lamsal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  body {
+    background: #030509;
+    color: #00f0ff;
+    font-family: 'JetBrains Mono', monospace;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  
+  .error-container {
+    text-align: center;
+    padding: 40px;
+    max-width: 600px;
+  }
+  
+  .error-code {
+    font-size: clamp(80px, 20vw, 200px);
+    font-weight: 700;
+    line-height: 1;
+    background: linear-gradient(135deg, #00f0ff, #3d7aff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 20px;
+    animation: glitch 3s infinite;
+  }
+  
+  @keyframes glitch {
+    0%, 90%, 100% { transform: translate(0); }
+    92% { transform: translate(-3px, 3px); }
+    94% { transform: translate(3px, -3px); }
+    96% { transform: translate(-3px, -3px); }
+    98% { transform: translate(3px, 3px); }
+  }
+  
+  h1 {
+    font-size: clamp(24px, 5vw, 36px);
+    margin-bottom: 16px;
+    color: #f1f5ff;
+  }
+  
+  p {
+    color: #7a8599;
+    margin-bottom: 32px;
+    line-height: 1.6;
+  }
+  
+  .btn {
+    display: inline-block;
+    padding: 14px 28px;
+    background: transparent;
+    border: 1px solid #00f0ff;
+    color: #00f0ff;
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    margin: 0 8px;
+  }
+  
+  .btn:hover {
+    background: #00f0ff;
+    color: #030509;
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+    transform: translateY(-2px);
+  }
+  
+  .scanlines {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      0deg,
+      rgba(0, 240, 255, 0.03) 0px,
+      rgba(0, 240, 255, 0.03) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+  }
+  
+  @media (max-width: 768px) {
+    .error-container {
+      padding: 20px;
+    }
+    
+    .btn {
+      display: block;
+      margin: 8px 0;
+    }
+  }
+</style>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1549893812626371" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div class="scanlines"></div>
+
+<div class="error-container">
+  <div class="error-code">404</div>
+  <h1>PAGE NOT FOUND</h1>
+  <p>The page you're looking for doesn't exist or has been moved. It might have been deleted, or you may have mistyped the URL.</p>
+  <div>
+    <a href="index.html" class="btn">Return Home</a>
+    <a href="contact.html" class="btn">Contact</a>
+  </div>
+</div>
+
+<script src="js/cookie-consent.js"></script>
+</body>
+</html>
