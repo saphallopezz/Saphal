@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cyber Lab // Saphal Lamsal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<canvas id="three-canvas"></canvas>
+<div class="grid-overlay"></div>
+<div class="scanlines"></div>
+<div class="noise"></div>
+<div class="cursor-glow"></div>
+
+<nav class="nav">
+  <a href="index.html" class="nav-brand"><span class="dot"></span><span>SAPHAL.<b>LAMSAL</b></span></a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="nav-link">Home</a></li>
+    <li><a href="about.html" class="nav-link">About</a></li>
+    <li><a href="skills.html" class="nav-link">Skills</a></li>
+    <li><a href="projects.html" class="nav-link">Projects</a></li>
+    <li><a href="experience.html" class="nav-link">Experience</a></li>
+    <li><a href="certifications.html" class="nav-link">Certs</a></li>
+    <li><a href="cyberlab.html" class="nav-link">Cyber Lab</a></li>
+    <li><a href="techstack.html" class="nav-link">Stack</a></li>
+    <li><a href="game.html" class="nav-link">Game</a></li>
+    <li><a href="contact.html" class="nav-link">Contact</a></li>
+  </ul>
+  <div class="nav-status"><span class="status-dot"></span><span data-clock>—</span></div>
+  <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+
+<main>
+  <div class="container page-head">
+    <div class="eyebrow reveal">Command Center</div>
+    <h1 class="reveal">Cybersecurity Lab</h1>
+    <p class="lead reveal">A simulated command-center interface — purely demonstrative, illustrating the tooling, dashboards and observability workflows used in real defensive engagements.</p>
+  </div>
+
+  <section class="section" style="padding-top:20px">
+    <div class="container">
+
+      <!-- Top stat tiles -->
+      <div class="reveal-stagger" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:20px">
+        <div class="stat-tile glass">
+          <div class="lbl">Threats Blocked</div>
+          <div class="num" data-count="847" data-suffix="">0</div>
+          <div class="delta">▲ 12% / 24h</div>
+        </div>
+        <div class="stat-tile glass">
+          <div class="lbl">Active Sessions</div>
+          <div class="num" data-count="14">0</div>
+          <div class="delta" style="color:var(--neon-cyan)">● Live</div>
+        </div>
+        <div class="stat-tile glass">
+          <div class="lbl">Patches Applied</div>
+          <div class="num" data-count="32">0</div>
+          <div class="delta">▲ 4 today</div>
+        </div>
+        <div class="stat-tile glass">
+          <div class="lbl">Uptime</div>
+          <div class="num" data-count="99.9" data-suffix="%">0</div>
+          <div class="delta">All systems OK</div>
+        </div>
+      </div>
+
+      <!-- Main lab grid -->
+      <div class="lab-grid">
+
+        <!-- Left col -->
+        <div class="lab-col">
+
+          <!-- Network map -->
+          <div class="lab-panel reveal">
+            <div class="lab-panel-head">
+              <span class="title">// Network Topology Map</span>
+              <span class="meta">10.0.0.0/24 · 14 nodes</span>
+            </div>
+            <div class="netmap">
+              <div class="netnode green" style="left:20%;top:30%"></div>
+              <div class="netnode" style="left:35%;top:55%"></div>
+              <div class="netnode green" style="left:50%;top:25%"></div>
+              <div class="netnode amber" style="left:60%;top:60%"></div>
+              <div class="netnode" style="left:75%;top:35%"></div>
+              <div class="netnode green" style="left:85%;top:65%"></div>
+              <div class="netnode" style="left:25%;top:75%"></div>
+              <div class="netnode red" style="left:45%;top:80%"></div>
+              <div class="netnode" style="left:65%;top:15%"></div>
+              <div class="netnode green" style="left:15%;top:55%"></div>
+            </div>
+          </div>
+
+          <!-- Threat log -->
+          <div class="lab-panel reveal">
+            <div class="lab-panel-head">
+              <span class="title">// Threat Detection Log</span>
+              <span class="meta">REAL-TIME</span>
+            </div>
+            <div class="threatlog"></div>
+          </div>
+
+          <!-- Tools matrix -->
+          <div class="lab-panel reveal">
+            <div class="lab-panel-head">
+              <span class="title">// Active Tooling</span>
+              <span class="meta">6 tools loaded</span>
+            </div>
+            <div class="lab-panel-body">
+              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px">
+                <div style="padding:14px;border:1px solid var(--glass-border);background:rgba(0,240,255,0.03)">
+                  <div class="mono" style="color:var(--neon-cyan);font-size:11px;letter-spacing:0.15em">NMAP</div>
+                  <div class="mono" style="font-size:10px;color:var(--ink-60);margin-top:4px">Port Scanner</div>
+                  <div class="mono" style="color:var(--term-green);font-size:9px;margin-top:8px;letter-spacing:0.2em">● ARMED</div>
+                </div>
+                <div style="padding:14px;border:1px solid var(--glass-border);background:rgba(0,240,255,0.03)">
+                  <div class="mono" style="color:var(--neon-cyan);font-size:11px;letter-spacing:0.15em">WIRESHARK</div>
+                  <div class="mono" style="font-size:10px;color:var(--ink-60);margin-top:4px">Packet Analyzer</div>
+                  <div class="mono" style="color:var(--term-green);font-size:9px;margin-top:8px;letter-spacing:0.2em">● ARMED</div>
+                </div>
+                <div style="padding:14px;border:1px solid var(--glass-border);background:rgba(0,240,255,0.03)">
+                  <div class="mono" style="color:var(--neon-cyan);font-size:11px;letter-spacing:0.15em">METASPLOIT</div>
+                  <div class="mono" style="font-size:10px;color:var(--ink-60);margin-top:4px">Exploitation FW</div>
+                  <div class="mono" style="color:var(--term-green);font-size:9px;margin-top:8px;letter-spacing:0.2em">● ARMED</div>
+                </div>
+                <div style="padding:14px;border:1px solid var(--glass-border);background:rgba(0,240,255,0.03)">
+                  <div class="mono" style="color:var(--neon-cyan);font-size:11px;letter-spacing:0.15em">BURP SUITE</div>
+                  <div class="mono" style="font-size:10px;color:var(--ink-60);margin-top:4px">Web Proxy</div>
+                  <div class="mono" style="color:var(--term-green);font-size:9px;margin-top:8px;letter-spacing:0.2em">● ARMED</div>
+                </div>
+                <div style="padding:14px;border:1px solid var(--glass-border);background:rgba(0,240,255,0.03)">
+                  <div class="mono" style="color:var(--neon-cyan);font-size:11px;letter-spacing:0.15em">JOHN</div>
+                  <div class="mono" style="font-size:10px;color:var(--ink-60);margin-top:4px">Hash Analysis</div>
+                  <div class="mono" style="color:var(--term-green);font-size:9px;margin-top:8px;letter-spacing:0.2em">● ARMED</div>
+                </div>
+                <div style="padding:14px;border:1px solid var(--glass-border);background:rgba(0,240,255,0.03)">
+                  <div class="mono" style="color:var(--neon-cyan);font-size:11px;letter-spacing:0.15em">AIRCRACK</div>
+                  <div class="mono" style="font-size:10px;color:var(--ink-60);margin-top:4px">WLAN Toolkit</div>
+                  <div class="mono" style="color:var(--term-green);font-size:9px;margin-top:8px;letter-spacing:0.2em">● ARMED</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right col -->
+        <div class="lab-col">
+
+          <!-- Radar Scanner -->
+          <div class="lab-panel reveal">
+            <div class="lab-panel-head">
+              <span class="title">// Perimeter Sweep</span>
+              <span class="meta">RADAR</span>
+            </div>
+            <div class="lab-panel-body">
+              <div class="scanner">
+                <div class="target"></div>
+                <div class="sweep"></div>
+                <div class="ping" style="top:35%;left:55%"></div>
+                <div class="ping" style="top:60%;left:40%"></div>
+                <div class="ping" style="top:50%;left:65%"></div>
+              </div>
+              <div style="margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:8px;font-family:var(--font-mono);font-size:10px">
+                <div style="color:var(--ink-60)">RANGE</div>
+                <div style="color:var(--neon-cyan);text-align:right">/24 SUBNET</div>
+                <div style="color:var(--ink-60)">TARGETS</div>
+                <div style="color:var(--term-green);text-align:right">3 IDENTIFIED</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Traffic Wave -->
+          <div class="lab-panel reveal">
+            <div class="lab-panel-head">
+              <span class="title">// Traffic Pulse</span>
+              <span class="meta">RX/TX</span>
+            </div>
+            <div class="lab-panel-body">
+              <div class="wave-viz">
+                <span style="animation-delay:0s"></span>
+                <span style="animation-delay:0.05s"></span>
+                <span style="animation-delay:0.1s"></span>
+                <span style="animation-delay:0.15s"></span>
+                <span style="animation-delay:0.2s"></span>
+                <span style="animation-delay:0.25s"></span>
+                <span style="animation-delay:0.3s"></span>
+                <span style="animation-delay:0.35s"></span>
+                <span style="animation-delay:0.4s"></span>
+                <span style="animation-delay:0.45s"></span>
+                <span style="animation-delay:0.5s"></span>
+                <span style="animation-delay:0.55s"></span>
+                <span style="animation-delay:0.6s"></span>
+                <span style="animation-delay:0.65s"></span>
+                <span style="animation-delay:0.7s"></span>
+                <span style="animation-delay:0.75s"></span>
+                <span style="animation-delay:0.8s"></span>
+                <span style="animation-delay:0.85s"></span>
+                <span style="animation-delay:0.9s"></span>
+                <span style="animation-delay:0.95s"></span>
+              </div>
+              <div style="display:flex;justify-content:space-between;margin-top:10px;font-family:var(--font-mono);font-size:10px">
+                <span style="color:var(--ink-60)">↓ 124.5 MB/s</span>
+                <span style="color:var(--neon-cyan)">↑ 38.2 MB/s</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mission status -->
+          <div class="lab-panel reveal">
+            <div class="lab-panel-head">
+              <span class="title">// Mission Status</span>
+              <span class="meta">CLASSIFIED</span>
+            </div>
+            <div class="lab-panel-body">
+              <div style="display:grid;gap:14px">
+                <div>
+                  <div style="display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:11px;margin-bottom:6px">
+                    <span>Recon</span><span class="text-cyan">100%</span>
+                  </div>
+                  <div class="prof-bar"><div class="fill" data-val="100" style="width:100%"></div></div>
+                </div>
+                <div>
+                  <div style="display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:11px;margin-bottom:6px">
+                    <span>Enumeration</span><span class="text-cyan">86%</span>
+                  </div>
+                  <div class="prof-bar"><div class="fill" data-val="86" style="width:86%"></div></div>
+                </div>
+                <div>
+                  <div style="display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:11px;margin-bottom:6px">
+                    <span>Vulnerability Scan</span><span class="text-cyan">72%</span>
+                  </div>
+                  <div class="prof-bar"><div class="fill" data-val="72" style="width:72%"></div></div>
+                </div>
+                <div>
+                  <div style="display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:11px;margin-bottom:6px">
+                    <span>Reporting</span><span class="text-cyan">45%</span>
+                  </div>
+                  <div class="prof-bar"><div class="fill" data-val="45" style="width:45%"></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Disclaimer -->
+          <div class="lab-panel reveal" style="border-color:rgba(255,179,71,.25)">
+            <div class="lab-panel-body" style="padding:18px">
+              <div class="mono" style="font-size:10px;letter-spacing:0.2em;color:var(--warn-amber);margin-bottom:10px">⚠ DEMONSTRATION ONLY</div>
+              <p style="font-size:12px;color:var(--ink-80);line-height:1.6">
+                This dashboard is an illustrative interface. All data is synthetic. Real engagements are conducted ethically, under written authorisation, and within scope.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div><div class="footer-brand">Saphal<span>.</span></div><div class="footer-tag">Developer · Security Enthusiast · Nepal</div></div>
+      <ul class="footer-links">
+        <li><a href="about.html">About</a></li><li><a href="skills.html">Skills</a></li>
+        <li><a href="projects.html">Projects</a></li><li><a href="experience.html">Experience</a></li>
+        <li><a href="certifications.html">Certs</a></li><li><a href="cyberlab.html">Cyber Lab</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 SAPHAL LAMSAL · ALL RIGHTS RESERVED</div>
+      <div class="social">
+        <a href="https://www.linkedin.com/in/saphallamsal/" target="_blank" rel="noopener">LINKEDIN</a>
+        <a href="https://github.com/safalamsall" target="_blank" rel="noopener">GITHUB</a>
+        <a href="mailto:info@safallamsal.com.np">EMAIL</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="js/three-scene.js"></script>
+<script src="js/cookie-consent.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
